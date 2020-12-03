@@ -2,6 +2,7 @@ import { ProviderProps } from "@react-three/cannon/dist/Provider";
 import { ContainerProps } from "react-three-fiber/targets/shared/web/ResizeContainer";
 import { PlayerRef } from "./player";
 import { MutableRefObject, ReactNode } from "react";
+import { Simulation } from "./simulation";
 
 export enum Environment {
   STANDARD,
@@ -25,6 +26,7 @@ export interface EnvironmentState {
   events: EnvironmentEvent[];
   setPlayer: (p: PlayerRef) => void;
   setPaused: (p: boolean, overlay?: string) => void;
+  simulation: Simulation;
   addEvent: (name: string, callback: (...args: any[]) => void) => void;
 }
 

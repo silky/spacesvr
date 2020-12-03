@@ -15,6 +15,7 @@ import {
   KeyframeEnvironmentState,
 } from "../types";
 import { useProgress } from "@react-three/drei";
+import { useSimulation } from "./simulation";
 
 export const environmentStateContext = createContext<EnvironmentState>(
   {} as EnvironmentState
@@ -38,6 +39,7 @@ export function useEnvironmentState(): EnvironmentState {
   const container = useRef<HTMLDivElement>(null);
   const events = useRef<EnvironmentEvent[]>([]);
   const player = useRef<PlayerRef>({} as PlayerRef);
+  const simulation = useSimulation();
 
   const setPaused = useCallback(
     (p, o) => {
@@ -87,6 +89,7 @@ export function useEnvironmentState(): EnvironmentState {
     container: container.current,
     events: events.current,
     setPaused,
+    simulation,
     setPlayer,
     addEvent,
   };
