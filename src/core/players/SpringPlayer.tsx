@@ -75,8 +75,12 @@ const SpringPlayer = (props: SpringPlayerProps) => {
 
   // update player every frame
   useFrame(({ clock }) => {
-    const [x, y, z, s = 1] = getSpringValues(spring);
+    const [x, y, z, s = 1, r] = getSpringValues(spring);
     bodyApi?.position.set(x * s, y * s, z * s);
+    // console.log(camera.rotation.y);
+    if (r !== camera.rotation.y && r !== 0) {
+      bodyApi?.rotation.set(0, r, 0);
+    }
   });
 
   return (

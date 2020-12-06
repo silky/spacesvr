@@ -4,6 +4,7 @@ import { EnvironmentState } from "./environment";
 export type Keyframe = {
   label: string;
   position: Vector3;
+  rotation?: number;
   scale?: number;
 };
 

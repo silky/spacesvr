@@ -83,15 +83,20 @@ export const KeyframeEnvironment = (
   const keyframePos = keyframes[keyframeIndex].position;
   const multPos = keyframePos.clone().multiplyScalar(scale);
   const [spring, setSpring] = useSpring(() => ({
-    xyzs: [...multPos.toArray(), scale],
+    xyzsr: [...multPos.toArray(), scale, 0],
     config: { ...config.molasses, precision: 0.0001 },
   }));
 
   // update keyframe positions
   useEffect(() => {
     const posArray = keyframes[keyframeIndex].position.toArray();
+    const rotY = keyframes[keyframeIndex].rotation;
     const scale = keyframes[keyframeIndex].scale || 1;
-    setSpring({ xyzs: [...posArray, scale] });
+    if (rotY !== undefined) {
+      setSpring({
+        xyzsr: [...posArray, scale, rotY],
+      });
+    }
   }, [keyframeIndex]);
 
   const state = useEnvironmentState();
