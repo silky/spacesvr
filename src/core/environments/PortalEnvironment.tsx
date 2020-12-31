@@ -16,6 +16,7 @@ import DesktopPause from "../overlays/DesktopPause";
 import MobilePause from "../overlays/MobilePause";
 import { isMobile } from "react-device-detect";
 import GlobalStyles from "../styles/GlobalStyles";
+import ResizableCanvas from "../styles/ResizableCanvas";
 
 const Container = styled.div`
   position: absolute;
@@ -71,6 +72,7 @@ type PortalEnvironmentProps = {
   portalId: string;
   portalHandler: (portalResult: Portal) => Portal;
   children2d?: ReactNode;
+  mobileCanvas?: boolean;
 };
 
 /**
@@ -91,6 +93,7 @@ export const PortalEnvironment = (
     canvasProps,
     physicsProps,
     children2d,
+    mobileCanvas,
     portalId,
     portalHandler,
   } = props;
@@ -117,7 +120,7 @@ export const PortalEnvironment = (
 
   return (
     <BrowserChecker>
-      <GlobalStyles />
+      {mobileCanvas ? <ResizableCanvas /> : <GlobalStyles />}
       <Container ref={state.containerRef}>
         <Canvas {...defaultCanvasProps} {...canvasProps}>
           <Physics {...defaultPhysicsProps} {...physicsProps}>

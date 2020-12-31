@@ -15,6 +15,7 @@ import {
 import LoadingScreen from "../overlays/LoadingScreen";
 import { RealisticEffects } from "../../effects";
 import GlobalStyles from "../styles/GlobalStyles";
+import ResizableCanvas from "../styles/ResizableCanvas";
 import SpringPlayer from "../players/SpringPlayer";
 import { KeyframeControlDisplay } from "../ui/KeyframeControlDisplay/";
 import { config, useSpring } from "react-spring";
@@ -60,6 +61,7 @@ const defaultPhysicsProps: Partial<ProviderProps> = {
 type KeyframeEnvironmentProps = {
   keyframes: Keyframe[];
   effects?: ReactNode;
+  mobileCanvas?: boolean;
 };
 
 /**
@@ -76,7 +78,14 @@ type KeyframeEnvironmentProps = {
 export const KeyframeEnvironment = (
   props: EnvironmentProps & KeyframeEnvironmentProps
 ) => {
-  const { children, canvasProps, physicsProps, keyframes, effects } = props;
+  const {
+    children,
+    canvasProps,
+    physicsProps,
+    keyframes,
+    effects,
+    mobileCanvas,
+  } = props;
 
   const [keyframeIndex, setKeyframeIndex] = useState(0);
   const scale = keyframes[keyframeIndex].scale || 1;
@@ -110,7 +119,7 @@ export const KeyframeEnvironment = (
 
   return (
     <BrowserChecker>
-      <GlobalStyles />
+      {mobileCanvas ? <ResizableCanvas /> : <GlobalStyles />}
       <Container ref={state.containerRef}>
         <Canvas {...defaultCanvasProps} {...canvasProps}>
           <Physics {...defaultPhysicsProps} {...physicsProps}>

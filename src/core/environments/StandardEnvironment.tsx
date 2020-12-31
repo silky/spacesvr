@@ -16,6 +16,7 @@ import DesktopPause from "../overlays/DesktopPause";
 import MobilePause from "../overlays/MobilePause";
 import { isMobile } from "react-device-detect";
 import GlobalStyles from "../styles/GlobalStyles";
+import ResizableCanvas from "../styles/ResizableCanvas";
 import { ReactNode } from "react";
 
 const Container = styled.div`
@@ -55,6 +56,7 @@ type StandardEnvironmentProps = {
   };
   effects?: ReactNode;
   disableGround?: boolean;
+  mobileCanvas?: boolean;
 };
 
 /**
@@ -77,13 +79,14 @@ export const StandardEnvironment = (
     player,
     effects,
     disableGround,
+    mobileCanvas,
   } = props;
 
   const state = useEnvironmentState();
 
   return (
     <BrowserChecker>
-      <GlobalStyles />
+      {mobileCanvas ? <ResizableCanvas /> : <GlobalStyles />}
       <Container ref={state.containerRef}>
         <Canvas {...defaultCanvasProps} {...canvasProps}>
           <Physics {...defaultPhysicsProps} {...physicsProps}>
